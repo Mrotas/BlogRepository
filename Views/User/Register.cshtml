@@ -1,0 +1,28 @@
+﻿@model RegisterModel
+@{
+    ViewData["Title"] = "Register";
+}
+
+<h1>Zarejestruj</h1>
+
+<form action="/User/Register" method="post">
+    <label for="Name">Imię: </label>
+    <input type="text" name="Name" />
+
+    <label for="LastName">Nazwisko: </label>
+    <input type="text" name="LastName" />
+
+    <label for="Username">Login: </label>
+    <input type="text" name="Username" />
+
+    <label for="Password">Hasło: </label>
+    <input type="password" name="Password" />
+
+    @if (ViewBag.ErrorMessage != null)
+    {
+        <span class="text-danger">@ViewBag.ErrorMessage</span>
+    }
+
+    <button type="submit">Zarejestruj</button>
+</form>
+

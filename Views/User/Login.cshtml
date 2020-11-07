@@ -1,0 +1,21 @@
+﻿@model LoginModel
+@{
+    ViewData["Title"] = "Login";
+}
+
+<h1>Logowanie</h1>
+
+<form action="/User/Login" method="post">
+    <label for="Username">Login: </label>
+    <input type="text" name="Username" />
+
+    <label for="Password">Hasło: </label>
+    <input type="password" name="Password" />
+
+    @if(ViewBag.ErrorMessage != null)
+    {
+        <span class="text-danger">@ViewBag.ErrorMessage</span>
+    }
+
+    <button type="submit">Zaloguj</button>
+</form>
