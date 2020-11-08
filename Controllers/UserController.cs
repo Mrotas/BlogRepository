@@ -7,9 +7,9 @@ namespace BlogRepository.Controllers
 {
     public class UserController : Controller
     {
-        private readonly IUserService _userService;
+        private readonly IUserAuthenticationService _userService;
 
-        public UserController(IUserService userService)
+        public UserController(IUserAuthenticationService userService)
         {
             _userService = userService;
         }

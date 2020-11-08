@@ -11,36 +11,41 @@ namespace BlogRepository.Domain
         private readonly IPostDao _postDao;
         private readonly ICommentService _commentService;
         private readonly IPostLikeDao _postLikeDao;
+        private readonly IUserService _userService;
 
-        public PostService(IPostDao postDao, ICommentService commentService, IPostLikeDao postLikeDao)
+        public PostService(IPostDao postDao, ICommentService commentService, IPostLikeDao postLikeDao, IUserService userService)
         {
             _postDao = postDao;
             _commentService = commentService;
             _postLikeDao = postLikeDao;
+            _userService = userService;
         }
 
         public PostViewModel GetPostViewModelByPostId(int postId)
         {
             Post post = _postDao.GetById(postId);
-            PostViewModel postViewModel = GetPostViewModel(post);
+            User user = _userService.GetByPostId(postId);
+
+            PostViewModel postViewModel = GetPostViewModel(post, user.Username);
             return postViewModel;
         }
 
         public List<PostViewModel> GetPostViewModelsByBlogId(int blogId)
         {
             List<Post> posts = _postDao.GetByBlogId(blogId);
+            User user = _userService.GetByBlogId(blogId);
 
             var postViewModels = new List<PostViewModel>();
             foreach (Post post in posts)
             {
-                PostViewModel postViewModel = GetPostViewModel(post);
+                PostViewModel postViewModel = GetPostViewModel(post, user.Username);
                 postViewModels.Add(postViewModel);
             }
 
             return postViewModels;
         }
 
-        private PostViewModel GetPostViewModel(Post post)
+        private PostViewModel GetPostViewModel(Post post, string username)
         {
             List<CommentViewModel> comments = _commentService.GetCommentViewModelsByPostId(post.Id);
             List<PostLike> likes = _postLikeDao.GetByPostId(post.Id);
@@ -48,6 +53,7 @@ namespace BlogRepository.Domain
             var postViewModel = new PostViewModel
             {
                 Id = post.Id,
+                Username = username,
                 Title = post.Title,
                 Content = post.Content,
                 Created = post.Created,

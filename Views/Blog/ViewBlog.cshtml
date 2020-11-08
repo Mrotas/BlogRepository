@@ -4,103 +4,71 @@
     ViewData["Title"] = "ViewBlog";
 }
 
-<h1>Mój blog</h1>
+<style>
+.no-side-paddings{
+    padding-left: 0px;
+    padding-right: 0px;
+}
+</style>
 
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Id)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Name)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Description)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Views)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-            <tr>
-                <td>
-                    @Html.DisplayFor(model => model.Id)
-                </td>
-                <td>
-                    @Html.DisplayFor(model => model.Name)
-                </td>
-                <td>
-                    @Html.DisplayFor(model => model.Description)
-                </td>
-                <td>
-                    @Html.DisplayFor(model => model.Views)
-                </td>
-                <td>
-                    @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
-                    @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
-                    @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
-                </td>
-            </tr>
-    </tbody>
-</table>
+<!-- Page Content -->
+<div class="container">
 
-<h1>Moje posty</h1>
+    <!-- Portfolio Item Heading -->
+    <h1 class="my-4">
+        @Model.Name
+        <small>wyświetlono @Model.Views razy</small>
+    </h1>
 
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                Title
-            </th>
-            <th>
-                Content
-            </th>
-            <th>
-                Created
-            </th>
-            <th>
-                Views
-            </th>
-            <th>
-                Likes
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var post in Model.Posts)
+    <!-- Portfolio Item Row -->
+    <div class="row">
+
+        <div class="no-side-paddings col-md-8">
+            <img class="img-fluid" src="http://placehold.it/750x500" alt="">
+        </div>
+
+        <div class="col-md-4">
+            <h3 class="my-3">Opis bloga</h3>
+            <p>@Model.Description</p>
+            @*<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam viverra euismod odio, gravida pellentesque urna varius vitae. Sed dui lorem, adipiscing in adipiscing et, interdum nec metus. Mauris ultricies, justo eu convallis placerat, felis enim.</p>
+            <h3 class="my-3">Project Details</h3>
+            <ul>
+                <li>Lorem Ipsum</li>
+                <li>Dolor Sit Amet</li>
+                <li>Consectetur</li>
+                <li>Adipiscing Elit</li>
+            </ul>*@
+        </div>
+
+    </div>
+    <!-- /.row -->
+    <!-- Related Projects Row -->
+    <h3 class="my-4">Ostatnie posty...</h3>
+
+    <div class="row">
+
+        @{ var recentPosts = Model.Posts.Count >= 4 ? Model.Posts.Take(4) : Model.Posts; }
+        @foreach (var post in recentPosts)
         {
-            <tr>
-                <td>
-                    @post.Title
-                </td>
-                <td>
-                    @post.Content
-                </td>
-                <td>
-                    @post.Created
-                </td>
-                <td>
-                    @post.Views
-                </td>
-                <td>
-                    @post.Likes
-                </td>
-                <td>
-                    @Html.ActionLink("Przejdź", "ViewPost", "Post", new { postId = post.Id}) |
-                    @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
-                    @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
-                    @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
-                </td>
-            </tr>
+            <div class="card no-side-paddings col-md-3 col-sm-6 mb-4">
+                <a href="#">
+                    <img class="img-fluid" src="http://placehold.it/500x300" alt="">
+                </a>
+                <div class="card-body">
+                    <h2 class="card-title">@post.Title</h2>
+                    @{var postPreview = (post.Content.Length >= 50 ? post.Content.Take(50) : post.Content) + "..."; }
+                    <p class="card-text">@postPreview</p>
+                    <a href="#" class="btn btn-primary">Czytaj więcej &rarr;</a>
+                </div>
+                <div class="card-footer text-muted">
+                    Dodano @post.Created
+                    Wyświetlenia: @post.Views
+                </div>
+            </div>
         }
-    </tbody>
-</table>
 
+    </div>
+    <!-- /.row -->
 
+</div>
+<!-- /.container -->

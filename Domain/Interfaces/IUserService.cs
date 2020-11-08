@@ -1,10 +1,10 @@
-﻿using BlogRepository.Models;
+﻿using BlogRepository.DataAccess.Collection;
 
 namespace BlogRepository.Domain.Interfaces
 {
     public interface IUserService
     {
-        LoginResultModel LogIn(LoginModel loginModel);
-        bool Register(RegisterModel registerModel);
+        User GetByBlogId(int blogId);
+        User GetByPostId(int postId);
     }
 }

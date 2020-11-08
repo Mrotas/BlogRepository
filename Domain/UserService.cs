@@ -1,41 +1,33 @@
 ﻿using BlogRepository.DataAccess.Collection;
 using BlogRepository.DataAccess.Dao.Interfaces;
 using BlogRepository.Domain.Interfaces;
-using BlogRepository.Models;
-using System;
 
 namespace BlogRepository.Domain
 {
     public class UserService : IUserService
     {
         private readonly IUserDao _userDao;
-        public UserService(IUserDao userDao)
+        private readonly IBlogDao _blogDao;
+        private readonly IPostDao _postDao;
+
+        public UserService(IUserDao userDao, IBlogDao blogDao, IPostDao postDao)
         {
             _userDao = userDao;
+            _blogDao = blogDao;
+            _postDao = postDao;
         }
 
-        public LoginResultModel LogIn(LoginModel loginModel)
+        public User GetByBlogId(int blogId)
         {
-            User user = _userDao.GetByUsername(loginModel.Username);
-            if (loginModel.Password == user?.Password)
-            {
-                return new LoginResultModel(user.Id, true);
-            }
-
-            return new LoginResultModel(0, false);
+            Blog blog = _blogDao.GetById(blogId);
+            User user = _userDao.GetById(blog.UserId);
+            return user;
         }
 
-        public bool Register(RegisterModel registerModel)
+        public User GetByPostId(int postId)
         {
-            try
-            {
-                bool success = _userDao.Create(registerModel);
-                return success;
-            }
-            catch(Exception e)
-            {
-                return false;
-            }
+            Post post = _postDao.GetById(postId);
+            return GetByBlogId(post.BlogId);
         }
     }
 }

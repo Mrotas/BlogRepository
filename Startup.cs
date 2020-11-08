@@ -47,6 +47,7 @@ namespace BlogRepository
             services.AddTransient(typeof(IBlogService), typeof(BlogService));
             services.AddTransient(typeof(ICommentService), typeof(CommentService));
             services.AddTransient(typeof(IPostService), typeof(PostService));
+            services.AddTransient(typeof(IUserAuthenticationService), typeof(UserAuthenticationService));
             services.AddTransient(typeof(IUserService), typeof(UserService));
         }
 
