@@ -34,5 +34,12 @@ namespace BlogRepository.DataAccess.Dao
             List<Post> posts = _postCollection.Find(filter).ToList();
             return posts;
         }
+
+        public void UpdateViews(int postId, int viewsCount)
+        {
+            FilterDefinition<Post> filter = Builders<Post>.Filter.Eq("Id", postId);
+            UpdateDefinition<Post> update = Builders<Post>.Update.Set("Views", viewsCount);
+            _postCollection.UpdateOne(filter, update);
+        }
     }
 }

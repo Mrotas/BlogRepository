@@ -8,5 +8,6 @@ namespace BlogRepository.DataAccess.Dao.Interfaces
         List<Post> GetRecent();
         Post GetById(int id);
         List<Post> GetByBlogId(int blogId);
+        void UpdateViews(int postId, int viewsCount);
     }
 }

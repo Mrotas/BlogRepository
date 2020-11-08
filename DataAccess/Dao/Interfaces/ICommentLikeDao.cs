@@ -6,5 +6,6 @@ namespace BlogRepository.DataAccess.Dao.Interfaces
     public interface ICommentLikeDao
     {
         List<CommentLike> GetByCommentId(int commentId);
+        void Insert(int commentId, int? userId);
     }
 }
