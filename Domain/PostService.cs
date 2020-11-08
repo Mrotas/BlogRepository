@@ -12,13 +12,15 @@ namespace BlogRepository.Domain
         private readonly ICommentService _commentService;
         private readonly IPostLikeDao _postLikeDao;
         private readonly IUserService _userService;
+        private readonly ICommentDao _commentDao;
 
-        public PostService(IPostDao postDao, ICommentService commentService, IPostLikeDao postLikeDao, IUserService userService)
+        public PostService(IPostDao postDao, ICommentService commentService, IPostLikeDao postLikeDao, IUserService userService, ICommentDao commentDao)
         {
             _postDao = postDao;
             _commentService = commentService;
             _postLikeDao = postLikeDao;
             _userService = userService;
+            _commentDao = commentDao;
         }
 
         public PostViewModel GetPostViewModelByPostId(int postId)
@@ -43,6 +45,11 @@ namespace BlogRepository.Domain
             }
 
             return postViewModels;
+        }
+
+        public void PostComment(int postId, string content, int? userId)
+        {
+            _commentDao.Insert(postId, content, userId);
         }
 
         private PostViewModel GetPostViewModel(Post post, string username)

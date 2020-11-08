@@ -35,13 +35,19 @@ namespace BlogRepository.Domain
 
         private CommentViewModel GetCommentViewModel(Comment comment)
         {
-            User user = _userDao.GetById(comment.UserId);
+            string username = "Gość";
+            if (comment.UserId.HasValue)
+            {
+                User user = _userDao.GetById(comment.UserId.Value);
+                username = user.Username;
+            }
+            
             List<CommentLike> likes = _commentLikeDao.GetByCommentId(comment.Id);
 
             var commentViewModel = new CommentViewModel
             {
                 Id = comment.Id,
-                Username = user.Username,
+                Username = username,
                 Content = comment.Content,
                 Created = comment.Created,
                 Likes = likes.Count

@@ -7,5 +7,6 @@ namespace BlogRepository.Domain.Interfaces
     {
         List<PostViewModel> GetPostViewModelsByBlogId(int blogId);
         PostViewModel GetPostViewModelByPostId(int postId);
+        void PostComment(int postId, string content, int? userId);
     }
 }

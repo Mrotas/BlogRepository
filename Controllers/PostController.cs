@@ -2,6 +2,7 @@
 using BlogRepository.DataAccess.Dao.Interfaces;
 using BlogRepository.Domain.Interfaces;
 using BlogRepository.Models;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 
@@ -28,6 +29,15 @@ namespace BlogRepository.Controllers
         {
             PostViewModel postViewModel = _postService.GetPostViewModelByPostId(postId);
             return View(postViewModel);
+        }
+
+        [HttpPost]
+        public IActionResult PostComment(int postId, string content)
+        {
+            int? userId = HttpContext.Session.GetInt32("UserId");
+            _postService.PostComment(postId, content, userId);
+
+            return RedirectToAction("ViewPost", "Post", routeValues: new { postId });
         }
     }
 }
