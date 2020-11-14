@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace BlogRepository.Models
+namespace BlogRepository.Models.Comment
 {
     public class CommentViewModel
     {

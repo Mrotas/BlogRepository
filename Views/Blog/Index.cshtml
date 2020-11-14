@@ -4,63 +4,65 @@
     ViewData["Title"] = "Index";
 }
 
-<h1>Index</h1>
+<!-- Page Content -->
+    <div class="container">
 
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Id)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.UserId)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Name)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Description)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Created)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Views)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Id)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.UserId)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Name)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Description)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Created)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Views)
-            </td>
-            <td>
-                @Html.ActionLink("Przejdź", "ViewBlog", "Blog", new {  blogId = item.Id  }) |
-                @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
-                @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
-                @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
-            </td>
-        </tr>
-}
-    </tbody>
-</table>
+        <h1 class="my-4">
+            Nasze blogi...
+        </h1>
+
+        @{
+            var random = new Random().Next(0, Model.Count());
+            var randomBlog = Model.ElementAt(random);
+            <!-- Heading Row -->
+            <div class="row align-items-center my-5">
+                <div class="col-lg-7 no-side-paddings">
+                    <img class="img-fluid rounded mb-4 mb-lg-0" src="http://placehold.it/900x400" alt="">
+                </div>
+                <!-- /.col-lg-8 -->
+                <div class="col-lg-4">
+                    <h1>@randomBlog.Name</h1>
+                    <p>@randomBlog.Description</p>
+                    <a class="btn btn-primary" href="~/Blog/ViewBlog?blogId=@randomBlog.Id">Przejdź do bloga &rarr;</a>
+                </div>
+                <!-- /.col-md-4 -->
+            </div>
+            <!-- /.row -->
+            <hr />
+        }
+
+        <!-- Content Row -->
+        @for (int i = 0; i < 9; i++)
+        {
+            if (i % 3 == 0)
+            {
+                <div class="row">
+                    @for (int j = i; j < i + 3; j++)
+                    {
+                        @if (Model.Count() <= j)
+                        {
+                            break;
+                        }
+                        <div class="card col-md-3 mb-5 no-side-paddings">
+                            <a href="#">
+                                <img class="img-fluid" src="http://placehold.it/500x300" alt="">
+                            </a>
+                            <div class="card-body">
+                                <h2 class="card-title">@Model.ElementAt(j).Name</h2>
+                                @{var blogPreview = (Model.ElementAt(j).Description.Length >= 50 ? Model.ElementAt(j).Description.Substring(0, 50) : Model.ElementAt(j).Description) + "..."; }
+                                <p class="card-text">@blogPreview</p>
+                                <a href="~/Blog/ViewBlog?blogId=@Model.ElementAt(j).Id" class="btn btn-primary">Przejdź do bloga &rarr;</a>
+                            </div>
+                            <div class="card-footer text-muted">
+                                Stworzono @Model.ElementAt(j).Created
+                                Wyświetlenia: @Model.ElementAt(j).Views
+                            </div>
+                        </div>
+                        <div class="col-md-1"></div>
+                    }
+                </div>
+                <!-- /.row -->
+            }
+        }
+    </div>
+<!-- /.container -->

@@ -1,7 +1,7 @@
 ﻿using BlogRepository.DataAccess.Collection;
 using BlogRepository.DataAccess.Dao.Interfaces;
 using BlogRepository.Domain.Interfaces;
-using BlogRepository.Models;
+using BlogRepository.Models.Comment;
 using System.Collections.Generic;
 
 namespace BlogRepository.Domain

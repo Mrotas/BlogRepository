@@ -1,4 +1,4 @@
-﻿using BlogRepository.Models;
+﻿using BlogRepository.Models.Comment;
 using System.Collections.Generic;
 
 namespace BlogRepository.Domain.Interfaces

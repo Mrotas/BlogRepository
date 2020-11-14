@@ -1,15 +1,8 @@
-﻿@model BlogRepository.Models.BlogViewModel
+﻿@model             BlogRepository.Models.Blog.BlogViewModel
 
 @{
     ViewData["Title"] = "ViewBlog";
 }
-
-<style>
-.no-side-paddings{
-    padding-left: 0px;
-    padding-right: 0px;
-}
-</style>
 
 <!-- Page Content -->
 <div class="container">
@@ -47,7 +40,7 @@
 
     <div class="row">
 
-        @{ var recentPosts = Model.Posts.Count >= 4 ? Model.Posts.Take(4) : Model.Posts; }
+        @{ var recentPosts = Model.Posts.Count >= 3 ? Model.Posts.Take(3) : Model.Posts; }
         @foreach (var post in recentPosts)
         {
             <div class="card no-side-paddings col-md-3 col-sm-6 mb-4">
@@ -65,6 +58,7 @@
                     Wyświetlenia: @post.Views
                 </div>
             </div>
+            <div class="col-md-1"></div>
         }
 
     </div>

@@ -1,4 +1,4 @@
-﻿@model BlogRepository.Models.PostViewModel
+﻿@model BlogRepository.Models.Post.PostViewModel
 
 @{
     ViewData["Title"] = "ViewPost";
@@ -72,7 +72,7 @@
             </div>
 
             <!-- Single Comment -->
-            @foreach (CommentViewModel comment in Model.Comments)
+            @foreach (var comment in Model.Comments)
             {
                 <div class="media mb-4">
                     <div style="margin-left:auto; margin-right:auto">
@@ -81,7 +81,6 @@
                             <input type="text" name="postId" value="@Model.Id" hidden />
                             <input type="text" name="commentId" value="@comment.Id" hidden />
                             <button class="btn">@comment.Likes   <i class="fa fa-thumbs-up" style="color: #1b6ec2"></i></button>
-                            @*<span>@comment.Likes</span>*@
                         </form>
                     </div>
                                         

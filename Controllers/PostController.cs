@@ -1,7 +1,7 @@
 ﻿using BlogRepository.DataAccess.Collection;
 using BlogRepository.DataAccess.Dao.Interfaces;
 using BlogRepository.Domain.Interfaces;
-using BlogRepository.Models;
+using BlogRepository.Models.Post;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;

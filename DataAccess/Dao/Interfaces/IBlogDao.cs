@@ -1,4 +1,5 @@
 ﻿using BlogRepository.DataAccess.Collection;
+using BlogRepository.Models.Blog;
 using System.Collections.Generic;
 
 namespace BlogRepository.DataAccess.Dao.Interfaces
@@ -8,5 +9,6 @@ namespace BlogRepository.DataAccess.Dao.Interfaces
         List<Blog> GetRecent();
         Blog GetById(int id);
         Blog GetByUserId(int userId);
+        void Update(BlogViewModel blogViewModel);
     }
 }

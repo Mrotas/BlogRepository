@@ -1,7 +1,8 @@
-﻿using System;
+﻿using BlogRepository.Models.Comment;
+using System;
 using System.Collections.Generic;
 
-namespace BlogRepository.Models
+namespace BlogRepository.Models.Post
 {
     public class PostViewModel
     {

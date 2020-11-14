@@ -1,5 +1,6 @@
 ﻿using BlogRepository.DataAccess.Collection;
 using BlogRepository.DataAccess.Dao.Interfaces;
+using BlogRepository.Models.Blog;
 using MongoDB.Bson;
 using MongoDB.Driver;
 using System.Collections.Generic;
@@ -33,6 +34,14 @@ namespace BlogRepository.DataAccess.Dao
             FilterDefinition<Blog> filter = Builders<Blog>.Filter.Eq("UserId", userId);
             Blog blog = _blogCollection.Find(filter).FirstOrDefault();
             return blog;
+        }
+
+        public void Update(BlogViewModel blogViewModel)
+        {
+            FilterDefinition<Blog> filter = Builders<Blog>.Filter.Eq("Id", blogViewModel.Id);
+            UpdateDefinition<Blog> update = Builders<Blog>.Update.Set("Name", blogViewModel.Name)
+                                                                 .Set("Description", blogViewModel.Description);
+            _blogCollection.UpdateOne(filter, update);
         }
     }
 }

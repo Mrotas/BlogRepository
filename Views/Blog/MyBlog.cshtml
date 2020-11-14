@@ -1,55 +1,72 @@
-﻿@model BlogRepository.DataAccess.Collection.Blog
+﻿@model BlogRepository.Models.Blog.BlogViewModel
 
 @{
     ViewData["Title"] = "MyBlog";
 }
 
-<h1>MyBlog</h1>
+<!-- Page Content -->
+<div class="container">
 
-<h4>Blog</h4>
-<hr />
-<div class="row">
-    <div class="col-md-4">
-        <form asp-action="MyBlog">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-group">
-                <label asp-for="Id" class="control-label"></label>
-                <input asp-for="Id" class="form-control" />
-                <span asp-validation-for="Id" class="text-danger"></span>
+    <form asp-action="Update" method="post">
+        <!-- Portfolio Item Heading -->
+        <div class="form-group">
+            <h1>Nazwa:</h1>
+            <input asp-for="Name" class="form-control" />
+            <span asp-validation-for="Name" class="text-danger"></span>
+        </div>
+
+        <!-- Portfolio Item Row -->
+        <div class="row">
+
+            <div class="no-side-paddings col-md-8">
+                <img class="img-fluid" src="http://placehold.it/750x500" alt="">
             </div>
-            <div class="form-group">
-                <label asp-for="UserId" class="control-label"></label>
-                <input asp-for="UserId" class="form-control" />
-                <span asp-validation-for="UserId" class="text-danger"></span>
+
+            <div class="col-md-4">
+                <h3 class="my-3">Opis bloga:</h3>
+                <div class="form-group">
+                    <textarea asp-for="Description" class="form-control" rows="6"></textarea>
+                    <span asp-validation-for="Description" class="text-danger"></span>
+                </div>
+
+                <input asp-for="Id" hidden />
+                <button class="btn btn-success" style="float: right" type="submit">Zapisz</button>
             </div>
-            <div class="form-group">
-                <label asp-for="Name" class="control-label"></label>
-                <input asp-for="Name" class="form-control" />
-                <span asp-validation-for="Name" class="text-danger"></span>
+
+        </div>
+
+    </form>
+    <!-- /.row -->
+
+    <!-- Related Projects Row -->
+    <h3 class="my-4">Posty:</h3>
+
+    <div class="row">
+
+        @{ var recentPosts = Model.Posts.Count >= 3 ? Model.Posts.Take(3) : Model.Posts; }
+        @foreach (var post in recentPosts)
+        {
+            <div class="card no-side-paddings col-md-3 col-sm-6 mb-4">
+                <a href="#">
+                    <img class="img-fluid" src="http://placehold.it/500x300" alt="">
+                </a>
+                <div class="card-body">
+                    <h2 class="card-title">@post.Title</h2>
+                    @{var postPreview = (post.Content.Length >= 50 ? post.Content.Take(50) : post.Content) + "..."; }
+                    <p class="card-text">@postPreview</p>
+                    <a href="#" class="btn btn-primary">Przejdź &rarr;</a>
+                    <a href="#" class="btn btn-dark">Edytuj &rarr;</a>
+                </div>
+                <div class="card-footer text-muted">
+                    Dodano @post.Created
+                    Wyświetlenia: @post.Views
+                </div>
             </div>
-            <div class="form-group">
-                <label asp-for="Description" class="control-label"></label>
-                <input asp-for="Description" class="form-control" />
-                <span asp-validation-for="Description" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Created" class="control-label"></label>
-                <input asp-for="Created" class="form-control" />
-                <span asp-validation-for="Created" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Views" class="control-label"></label>
-                <input asp-for="Views" class="form-control" />
-                <span asp-validation-for="Views" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Save" class="btn btn-primary" />
-            </div>
-        </form>
+            <div class="col-md-1"></div>
+        }
+
     </div>
-</div>
+    <!-- /.row -->
 
-<div>
-    <a asp-action="Index">Back to List</a>
 </div>
-
+<!-- /.container -->

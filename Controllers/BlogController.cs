@@ -1,7 +1,7 @@
 ﻿using BlogRepository.DataAccess.Collection;
 using BlogRepository.DataAccess.Dao.Interfaces;
 using BlogRepository.Domain.Interfaces;
-using BlogRepository.Models;
+using BlogRepository.Models.Blog;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
@@ -28,14 +28,21 @@ namespace BlogRepository.Controllers
         public IActionResult MyBlog()
         {
             int? userId = HttpContext.Session.GetInt32("UserId");
-            Blog blog = _blogDao.GetByUserId(userId.Value);
-            return View(blog);
+            BlogViewModel blogViewModel = _blogService.GetBlogViewModelByUserId(userId.Value);
+            return View(blogViewModel);
         }
 
         public IActionResult ViewBlog(int blogId)
         {
             BlogViewModel blogViewModel = _blogService.GetBlogViewModelByBlogId(blogId);
             return View(blogViewModel);
+        }
+
+        [HttpPost]
+        public IActionResult Update(BlogViewModel blogViewModel)
+        {
+            _blogService.Update(blogViewModel);
+            return RedirectToAction("ViewBlog", routeValues: new { blogId = blogViewModel.Id });
         }
     }
 }

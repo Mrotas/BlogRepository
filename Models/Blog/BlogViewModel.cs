@@ -1,6 +1,7 @@
-﻿using System.Collections.Generic;
+﻿using BlogRepository.Models.Post;
+using System.Collections.Generic;
 
-namespace BlogRepository.Models
+namespace BlogRepository.Models.Blog
 {
     public class BlogViewModel
     {
