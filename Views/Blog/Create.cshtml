@@ -1,0 +1,18 @@
+﻿
+@{
+    ViewData["Title"] = "Create";
+}
+
+<div class="container">
+    <div style="text-align:center; margin-top: 200px">
+        <h3>Nie posiadasz jeszcze własnego bloga. Czy chciałbyś stworzyć bloga?</h3>
+        <div class="row my-5" style="display:inline-flex">
+            <form action="~/Blog/Create" method="post">
+                <button class="btn btn-primary" type="submit">Tak, chcę!</button>
+            </form>
+            <form action="~/Blog">
+                <button class="btn btn-dark" style="margin-left:40px">Nie, dziękuję</button>
+            </form>            
+        </div>
+    </div>
+</div>

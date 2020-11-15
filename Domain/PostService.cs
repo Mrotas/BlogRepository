@@ -91,5 +91,22 @@ namespace BlogRepository.Domain
 
             return postViewModel;
         }
+
+        public void Delete(int postId)
+        {
+            List<Comment> comments = _commentDao.GetByPostId(postId);
+            foreach (Comment comment in comments)
+            {
+                _commentService.Delete(comment.Id);
+            }
+
+            List<PostLike> postLikes = _postLikeDao.GetByPostId(postId);
+            foreach (PostLike postLike in postLikes)
+            {
+                _postLikeDao.Delete(postLike.Id);
+            }
+
+            _postDao.Delete(postId);
+        }
     }
 }

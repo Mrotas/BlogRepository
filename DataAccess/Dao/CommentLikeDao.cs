@@ -41,5 +41,11 @@ namespace BlogRepository.DataAccess.Dao
             };
             _commentLikeCollention.InsertOne(commentLike);
         }
+
+        public void Delete(int commentLikeId)
+        {
+            FilterDefinition<CommentLike> filter = Builders<CommentLike>.Filter.Eq("Id", commentLikeId);
+            _commentLikeCollention.DeleteOne(filter);
+        }
     }
 }

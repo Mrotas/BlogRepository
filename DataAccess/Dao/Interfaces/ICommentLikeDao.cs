@@ -7,5 +7,6 @@ namespace BlogRepository.DataAccess.Dao.Interfaces
     {
         List<CommentLike> GetByCommentId(int commentId);
         void Insert(int commentId, int? userId);
+        void Delete(int commentLikeId);
     }
 }

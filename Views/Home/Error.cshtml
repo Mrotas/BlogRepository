@@ -1,0 +1,17 @@
+﻿@model BlogRepository.Models.ErrorMessageViewModel
+
+@{
+    ViewData["Title"] = "Error";
+}
+
+<div class="container">
+    <div style="text-align:center; margin-top: 200px">
+        <h1>Ups!</h1>
+        <h3>@Model.ErrorMessage</h3>
+        <div class="row my-5" style="display:inline-flex">
+            <form action="~/Home">
+                <button class="btn btn-primary" style="margin-left:40px">Strona główna</button>
+            </form>
+        </div>
+    </div>
+</div>

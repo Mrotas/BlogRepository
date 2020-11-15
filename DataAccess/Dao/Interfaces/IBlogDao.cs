@@ -9,6 +9,9 @@ namespace BlogRepository.DataAccess.Dao.Interfaces
         List<Blog> GetRecent();
         Blog GetById(int id);
         Blog GetByUserId(int userId);
+        int Insert(int userId);
         void Update(BlogViewModel blogViewModel);
+        void UpdateViews(int blogId, int viewsCount);
+        void Delete(int id);
     }
 }

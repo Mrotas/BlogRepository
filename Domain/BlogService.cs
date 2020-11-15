@@ -4,6 +4,7 @@ using BlogRepository.Domain.Interfaces;
 using BlogRepository.Models.Blog;
 using BlogRepository.Models.Post;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace BlogRepository.Domain
 {
@@ -12,12 +13,14 @@ namespace BlogRepository.Domain
         private readonly IBlogDao _blogDao;
         private readonly IPostService _postService;
         private readonly IUserDao _userDao;
+        private readonly IPostDao _postDao;
 
-        public BlogService(IBlogDao blogDao, IPostService postService, IUserDao userDao)
+        public BlogService(IBlogDao blogDao, IPostService postService, IUserDao userDao, IPostDao postDao)
         {
             _blogDao = blogDao;
             _postService = postService;
             _userDao = userDao;
+            _postDao = postDao;
         }
 
         public BlogViewModel GetBlogViewModelByBlogId(int blogId)
@@ -41,6 +44,11 @@ namespace BlogRepository.Domain
         {
             User user = _userDao.GetById(userId);
             Blog blog = _blogDao.GetByUserId(user.Id);
+            if (blog == null)
+            {
+                return null;
+            }
+
             List<PostViewModel> posts = _postService.GetPostViewModelsByBlogId(blog.Id);
 
             var blogViewModel = new BlogViewModel
@@ -55,9 +63,41 @@ namespace BlogRepository.Domain
             return blogViewModel;
         }
 
+        public int Create(int userId)
+        {
+            int blogId = _blogDao.Insert(userId);
+            return blogId;
+        }
+
         public void Update(BlogViewModel blogViewModel)
         {
             _blogDao.Update(blogViewModel);
+        }
+
+        public void UpdateViewsCount(int blogId)
+        {
+            Blog blog = _blogDao.GetById(blogId);
+            int currentViewsCount = blog.Views;
+            _blogDao.UpdateViews(blogId, ++currentViewsCount);
+        }
+
+        public bool Delete(int userId, string blogName)
+        {
+            Blog blog = _blogDao.GetByUserId(userId);
+            if (blog.Name != blogName)
+            {
+                return false;
+            }
+
+            List<Post> posts = _postDao.GetByBlogId(blog.Id);
+            foreach (Post post in posts)
+            {
+                _postService.Delete(post.Id);
+            }
+
+            _blogDao.Delete(blog.Id);
+
+            return true;
         }
     }
 }

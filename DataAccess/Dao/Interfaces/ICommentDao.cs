@@ -8,5 +8,6 @@ namespace BlogRepository.DataAccess.Dao.Interfaces
         List<Comment> GetComments();
         List<Comment> GetByPostId(int postId);
         void Insert(int postId, string content, int? userId);
+        void Delete(int commentId);
     }
 }

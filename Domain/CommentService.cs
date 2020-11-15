@@ -55,5 +55,16 @@ namespace BlogRepository.Domain
 
             return commentViewModel;
         }
+
+        public void Delete(int commentId)
+        {
+            List<CommentLike> commentLikes = _commentLikeDao.GetByCommentId(commentId);
+            foreach (CommentLike commentLike in commentLikes)
+            {
+                _commentLikeDao.Delete(commentLike.Id);
+            }
+
+            _commentDao.Delete(commentId);
+        }
     }
 }

@@ -9,5 +9,6 @@ namespace BlogRepository.DataAccess.Dao.Interfaces
         Post GetById(int id);
         List<Post> GetByBlogId(int blogId);
         void UpdateViews(int postId, int viewsCount);
+        void Delete(int postId);
     }
 }

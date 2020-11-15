@@ -11,5 +11,6 @@ namespace BlogRepository.Domain.Interfaces
         void UpdateViewsCount(int postId);
         void LikePost(int postId, int? userId);
         void LikeComment(int commentId, int? userId);
+        void Delete(int postId);
     }
 }

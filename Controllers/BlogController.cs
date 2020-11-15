@@ -5,6 +5,7 @@ using BlogRepository.Models.Blog;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace BlogRepository.Controllers
 {
@@ -29,13 +30,26 @@ namespace BlogRepository.Controllers
         {
             int? userId = HttpContext.Session.GetInt32("UserId");
             BlogViewModel blogViewModel = _blogService.GetBlogViewModelByUserId(userId.Value);
+            if (blogViewModel == null)
+            {
+                return View("Create");
+            }
             return View(blogViewModel);
         }
 
         public IActionResult ViewBlog(int blogId)
         {
             BlogViewModel blogViewModel = _blogService.GetBlogViewModelByBlogId(blogId);
+            Task.Run(() => _blogService.UpdateViewsCount(blogId));
             return View(blogViewModel);
+        }
+
+        [HttpPost]
+        public IActionResult Create()
+        {
+            int? userId = HttpContext.Session.GetInt32("UserId");
+            int blogId = _blogService.Create(userId.Value);
+            return RedirectToAction("MyBlog", routeValues: new { blogId });
         }
 
         [HttpPost]
@@ -43,6 +57,23 @@ namespace BlogRepository.Controllers
         {
             _blogService.Update(blogViewModel);
             return RedirectToAction("ViewBlog", routeValues: new { blogId = blogViewModel.Id });
+        }
+
+        public IActionResult Delete()
+        {
+            return View("Delete");
+        }
+
+        [HttpPost]
+        public IActionResult Delete(string blogName)
+        {
+            int? userId = HttpContext.Session.GetInt32("UserId");
+            bool deleted = _blogService.Delete(userId.Value, blogName);
+            if (deleted)
+            {
+                return RedirectToAction("Index");                    
+            }
+            return RedirectToAction("Error", "Home", routeValues: new { errorMessage = "Wystąpił błąd podczas usuwania bloga. Upewnij się, że podano poprawną nazwę bloga." });
         }
     }
 }

@@ -41,5 +41,11 @@ namespace BlogRepository.DataAccess.Dao
             UpdateDefinition<Post> update = Builders<Post>.Update.Set("Views", viewsCount);
             _postCollection.UpdateOne(filter, update);
         }
+
+        public void Delete(int postId)
+        {
+            FilterDefinition<Post> filter = Builders<Post>.Filter.Eq("Id", postId);
+            _postCollection.DeleteOne(filter);
+        }
     }
 }

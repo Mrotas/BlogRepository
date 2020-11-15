@@ -3,6 +3,7 @@ using BlogRepository.DataAccess.Dao.Interfaces;
 using BlogRepository.Models.Blog;
 using MongoDB.Bson;
 using MongoDB.Driver;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -14,6 +15,12 @@ namespace BlogRepository.DataAccess.Dao
         public BlogDao(IMongoClient mongoClient) : base(mongoClient)
         {
             _blogCollection = Database.GetCollection<Blog>("Blogs");
+        }
+
+        public List<Blog> GetBlogs()
+        {
+            List<Blog> blogs = _blogCollection.Find(new BsonDocument()).ToList().ToList();
+            return blogs;
         }
 
         public List<Blog> GetRecent()
@@ -36,12 +43,44 @@ namespace BlogRepository.DataAccess.Dao
             return blog;
         }
 
+        public int Insert(int userId)
+        {
+            List<Blog> blogs = GetBlogs();
+            int lastId = blogs.Max(x => x.Id);
+
+            var blog = new Blog
+            {
+                Id = ++lastId,
+                UserId = userId,
+                Name = String.Empty,
+                Description = String.Empty,
+                Views = 0,
+                Created = DateTime.Now
+            };
+            _blogCollection.InsertOne(blog);
+
+            return blog.Id;
+        }
+
         public void Update(BlogViewModel blogViewModel)
         {
             FilterDefinition<Blog> filter = Builders<Blog>.Filter.Eq("Id", blogViewModel.Id);
             UpdateDefinition<Blog> update = Builders<Blog>.Update.Set("Name", blogViewModel.Name)
                                                                  .Set("Description", blogViewModel.Description);
             _blogCollection.UpdateOne(filter, update);
+        }
+
+        public void UpdateViews(int blogId, int viewsCount)
+        {
+            FilterDefinition<Blog> filter = Builders<Blog>.Filter.Eq("Id", blogId);
+            UpdateDefinition<Blog> update = Builders<Blog>.Update.Set("Views", viewsCount);
+            _blogCollection.UpdateOne(filter, update);
+        }
+
+        public void Delete(int id)
+        {
+            FilterDefinition<Blog> filter = Builders<Blog>.Filter.Eq("Id", id);
+            _blogCollection.DeleteOne(filter);
         }
     }
 }
