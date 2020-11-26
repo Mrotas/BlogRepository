@@ -62,11 +62,11 @@ namespace BlogRepository.DataAccess.Dao
             return blog.Id;
         }
 
-        public void Update(BlogViewModel blogViewModel)
+        public void Update(BlogEditViewModel blog)
         {
-            FilterDefinition<Blog> filter = Builders<Blog>.Filter.Eq("Id", blogViewModel.Id);
-            UpdateDefinition<Blog> update = Builders<Blog>.Update.Set("Name", blogViewModel.Name)
-                                                                 .Set("Description", blogViewModel.Description);
+            FilterDefinition<Blog> filter = Builders<Blog>.Filter.Eq("Id", blog.Id);
+            UpdateDefinition<Blog> update = Builders<Blog>.Update.Set("Name", blog.Name)
+                                                                 .Set("Description", blog.Description);
             _blogCollection.UpdateOne(filter, update);
         }
 

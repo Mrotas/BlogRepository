@@ -53,10 +53,10 @@ namespace BlogRepository.Controllers
         }
 
         [HttpPost]
-        public IActionResult Update(BlogViewModel blogViewModel)
+        public IActionResult Update(BlogEditViewModel blog)
         {
-            _blogService.Update(blogViewModel);
-            return RedirectToAction("ViewBlog", routeValues: new { blogId = blogViewModel.Id });
+            _blogService.Update(blog);
+            return RedirectToAction("ViewBlog", routeValues: new { blogId = blog.Id });
         }
 
         public IActionResult Delete()

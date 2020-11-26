@@ -4,7 +4,6 @@ using BlogRepository.Domain.Interfaces;
 using BlogRepository.Models.Blog;
 using BlogRepository.Models.Post;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace BlogRepository.Domain
 {
@@ -69,9 +68,9 @@ namespace BlogRepository.Domain
             return blogId;
         }
 
-        public void Update(BlogViewModel blogViewModel)
+        public void Update(BlogEditViewModel blog)
         {
-            _blogDao.Update(blogViewModel);
+            _blogDao.Update(blog);
         }
 
         public void UpdateViewsCount(int blogId)

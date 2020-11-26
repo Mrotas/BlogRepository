@@ -15,8 +15,15 @@ namespace BlogRepository.Domain
         private readonly IUserService _userService;
         private readonly ICommentDao _commentDao;
         private readonly ICommentLikeDao _commentLikeDao;
+        private readonly IBlogDao _blogDao;
 
-        public PostService(IPostDao postDao, ICommentService commentService, IPostLikeDao postLikeDao, IUserService userService, ICommentDao commentDao, ICommentLikeDao commentLikeDao)
+        public PostService(IPostDao postDao, 
+            ICommentService commentService, 
+            IPostLikeDao postLikeDao, 
+            IUserService userService, 
+            ICommentDao commentDao, 
+            ICommentLikeDao commentLikeDao,
+            IBlogDao blogDao)
         {
             _postDao = postDao;
             _commentService = commentService;
@@ -24,6 +31,7 @@ namespace BlogRepository.Domain
             _userService = userService;
             _commentDao = commentDao;
             _commentLikeDao = commentLikeDao;
+            _blogDao = blogDao;
         }
 
         public PostViewModel GetPostViewModelByPostId(int postId)
@@ -80,9 +88,11 @@ namespace BlogRepository.Domain
             var postViewModel = new PostViewModel
             {
                 Id = post.Id,
+                BlogId = post.BlogId,
                 Username = username,
                 Title = post.Title,
                 Content = post.Content,
+                Tags = post.Tags,
                 Created = post.Created,
                 Views = post.Views,
                 Likes = likes.Count,
@@ -90,6 +100,18 @@ namespace BlogRepository.Domain
             };
 
             return postViewModel;
+        }
+        
+        public int Create(string title, string content, string tags, int userId)
+        {
+            Blog blog = _blogDao.GetByUserId(userId);
+            int id = _postDao.Insert(title, content, tags, blog.Id);
+            return id;
+        }
+
+        public void Update(PostEditViewModel post)
+        {
+            _postDao.Update(post);
         }
 
         public void Delete(int postId)

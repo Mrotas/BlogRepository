@@ -11,6 +11,8 @@ namespace BlogRepository.Domain.Interfaces
         void UpdateViewsCount(int postId);
         void LikePost(int postId, int? userId);
         void LikeComment(int commentId, int? userId);
+        int Create(string title, string content, string tags, int userId);
+        void Update(PostEditViewModel post);
         void Delete(int postId);
     }
 }

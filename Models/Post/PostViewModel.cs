@@ -7,9 +7,11 @@ namespace BlogRepository.Models.Post
     public class PostViewModel
     {
         public int Id { get; set; }
+        public int BlogId { get; set; }
         public string Username { get; set; }
         public string Title { get; set; }
         public string Content { get; set; }
+        public string Tags { get; set; }
         public DateTime Created { get; set; }
         public int Views { get; set; }
         public int Likes { get; set; }

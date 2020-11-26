@@ -10,7 +10,7 @@ namespace BlogRepository.DataAccess.Dao.Interfaces
         Blog GetById(int id);
         Blog GetByUserId(int userId);
         int Insert(int userId);
-        void Update(BlogViewModel blogViewModel);
+        void Update(BlogEditViewModel blog);
         void UpdateViews(int blogId, int viewsCount);
         void Delete(int id);
     }

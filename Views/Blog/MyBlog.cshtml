@@ -25,7 +25,7 @@
             <div class="col-md-4">
                 <h3 class="my-3">Opis bloga:</h3>
                 <div class="form-group">
-                    <textarea asp-for="Description" class="form-control" rows="6"></textarea>
+                    <textarea asp-for="Description" class="form-control" rows="17"></textarea>
                     <span asp-validation-for="Description" class="text-danger"></span>
                 </div>
 
@@ -54,8 +54,8 @@
                     <h2 class="card-title">@post.Title</h2>
                     @{var postPreview = (post.Content.Length >= 50 ? post.Content.Take(50) : post.Content) + "..."; }
                     <p class="card-text">@postPreview</p>
-                    <a href="#" class="btn btn-primary">Przejdź &rarr;</a>
-                    <a href="#" class="btn btn-dark">Edytuj &rarr;</a>
+                    <a href="~/Post/ViewPost?postId=@post.Id" class="btn btn-primary">Przejdź &rarr;</a>
+                    <a href="~/Post/Edit?postId=@post.Id" class="btn btn-dark">Edytuj &rarr;</a>
                 </div>
                 <div class="card-footer text-muted">
                     Dodano @post.Created
@@ -69,8 +69,11 @@
     <!-- /.row -->
 
     <hr />
-    <div style="text-align:center">
-        <form action="~/Blog/Delete">
+    <div style="display: flow-root">
+        <form action="~/Post/Create" style="float:left">
+            <button class="btn btn-success" style="width:150px" type="submit">Nowy post</button>
+        </form>
+        <form action="~/Blog/Delete" style="float: right">
             <button class="btn btn-danger" style="width:150px" type="submit">Usuń bloga</button>
         </form>
     </div>    

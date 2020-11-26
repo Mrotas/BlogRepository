@@ -59,5 +59,32 @@ namespace BlogRepository.Controllers
 
             return RedirectToAction("ViewPost", "Post", routeValues: new { postId });
         }
+
+        public IActionResult Create()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public IActionResult Create(string title, string content, string tags)
+        {
+            int? userId = HttpContext.Session.GetInt32("UserId");
+            int postId = _postService.Create(title, content, tags, userId.Value);
+
+            return RedirectToAction("ViewPost", "Post", routeValues: new { postId });
+        }
+
+        public IActionResult Edit(int postId)
+        {
+            PostViewModel post = _postService.GetPostViewModelByPostId(postId);
+            return View(post);
+        }
+
+        [HttpPost]
+        public IActionResult Update(PostEditViewModel post)
+        {
+            _postService.Update(post);
+            return RedirectToAction("ViewPost", routeValues: new { postId = post.Id });
+        }
     }
 }
