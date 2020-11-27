@@ -3,19 +3,23 @@
     ViewData["Title"] = "Login";
 }
 
-<h1>Logowanie</h1>
+<link rel="stylesheet" href="~/css/User.css">
+<div class="text-center" style="margin-top:100px">
+    <form class="form-sign" action="/User/Login" method="post" autocomplete="off">
+        <img class="mb-4" src="http://placehold.it/100x100">
+        <h1 class="mb-3 font-weight-normal">Zaloguj się</h1>
 
-<form action="/User/Login" method="post">
-    <label for="Username">Login: </label>
-    <input type="text" name="Username" />
+        <label for="Username" class="sr-only">Login</label>
+        <input type="text" name="Username" class="form-control" placeholder="Login" required autofocus>
 
-    <label for="Password">Hasło: </label>
-    <input type="password" name="Password" />
+        <label for="Password" class="sr-only">Hasło</label>
+        <input type="password" name="Password" class="form-control" placeholder="Hasło" required>
 
-    @if(ViewBag.ErrorMessage != null)
-    {
-        <span class="text-danger">@ViewBag.ErrorMessage</span>
-    }
+        @if (ViewBag.ErrorMessage != null)
+        {
+            <span class="text-danger">@ViewBag.ErrorMessage</span>
+        }
 
-    <button type="submit">Zaloguj</button>
-</form>
+        <button class="btn btn-lg btn-primary btn-block" type="submit">Zaloguj</button>
+    </form>
+</div>

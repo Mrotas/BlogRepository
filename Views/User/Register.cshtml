@@ -3,26 +3,28 @@
     ViewData["Title"] = "Register";
 }
 
-<h1>Zarejestruj</h1>
+<link rel="stylesheet" href="~/css/User.css">
+<div class="text-center" style="margin-top:100px">
+    <form class="form-sign" action="/User/Register" method="post" autocomplete="off">
+        <h1 class="mb-3 font-weight-normal">Zarejestruj się</h1>
 
-<form action="/User/Register" method="post">
-    <label for="Name">Imię: </label>
-    <input type="text" name="Name" />
+        <label for="Name" class="sr-only">Login</label>
+        <input type="text" name="Name" class="form-control" placeholder="Imię" required autofocus>
 
-    <label for="LastName">Nazwisko: </label>
-    <input type="text" name="LastName" />
+        <label for="LastName" class="sr-only">Nazwisko</label>
+        <input type="text" name="LastName" class="form-control" placeholder="Nazwisko" required>
 
-    <label for="Username">Login: </label>
-    <input type="text" name="Username" />
+        <label for="Username" class="sr-only">Login</label>
+        <input type="text" name="Username" class="form-control" placeholder="Login" required>
 
-    <label for="Password">Hasło: </label>
-    <input type="password" name="Password" />
+        <label for="Password" class="sr-only">Hasło</label>
+        <input type="password" name="Password" class="form-control" placeholder="Hasło" required>
 
-    @if (ViewBag.ErrorMessage != null)
-    {
-        <span class="text-danger">@ViewBag.ErrorMessage</span>
-    }
+        @if (ViewBag.ErrorMessage != null)
+        {
+            <span class="text-danger">@ViewBag.ErrorMessage</span>
+        }
 
-    <button type="submit">Zarejestruj</button>
-</form>
-
+        <button class="btn btn-lg btn-primary btn-block" type="submit">Zarejestruj</button>
+    </form>
+</div>
