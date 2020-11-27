@@ -18,7 +18,7 @@
 
                 <form action="~/Post/Create" method="post">
                     <h1>Tytuł:</h1>
-                    <input name="Title" class="form-control" required />
+                    <input name="Title" class="form-control" />
 
                     <hr>
 
@@ -29,14 +29,15 @@
 
                     <h3>Treść:</h3>
                     <!-- Post Content -->
-                    <textarea class="form-control" style="height:400px" name="Content" required></textarea>
+                    <textarea class="form-control" style="height:400px" name="Content"></textarea>
 
                     <hr>
 
                     <h6>Tagi:</h6>
-                    <input name="Tags" class="form-control" required/>
+                    <input name="Tags" class="form-control" />
 
                     <button class="btn btn-success" style="float:right; margin-top:20px" type="submit">Zapisz</button>
+                    <button class="btn btn-primary" style="float:right; margin-top:20px; margin-right: 20px" type="submit" formaction="~/Blog/MyBlog">Anuluj</button>
                 </form>
 
             </div>

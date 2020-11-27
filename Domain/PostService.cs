@@ -4,6 +4,7 @@ using BlogRepository.Domain.Interfaces;
 using BlogRepository.Models.Comment;
 using BlogRepository.Models.Post;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace BlogRepository.Domain
 {
@@ -58,6 +59,20 @@ namespace BlogRepository.Domain
             return postViewModels;
         }
 
+        public List<Post> GetByTag(string tag)
+        {
+            List<Post> posts = _postDao.GetPosts();
+            List<Post> postsWithTag = posts.Where(x => x.Tags.Contains(tag)).ToList();
+            return postsWithTag;
+        }
+
+        public List<Post> GetBySearchString(string searchString)
+        {
+            List<Post> posts = _postDao.GetPosts();
+            List<Post> postsWithSearchString = posts.Where(x => x.Title.Contains(searchString) || x.Content.Contains(searchString) || x.Tags.Contains(searchString)).ToList();
+            return postsWithSearchString;
+        }
+
         public void PostComment(int postId, string content, int? userId)
         {
             _commentDao.Insert(postId, content, userId);
@@ -80,28 +95,6 @@ namespace BlogRepository.Domain
             _commentLikeDao.Insert(commentId, userId);
         }
 
-        private PostViewModel GetPostViewModel(Post post, string username)
-        {
-            List<CommentViewModel> comments = _commentService.GetCommentViewModelsByPostId(post.Id);
-            List<PostLike> likes = _postLikeDao.GetByPostId(post.Id);
-
-            var postViewModel = new PostViewModel
-            {
-                Id = post.Id,
-                BlogId = post.BlogId,
-                Username = username,
-                Title = post.Title,
-                Content = post.Content,
-                Tags = post.Tags,
-                Created = post.Created,
-                Views = post.Views,
-                Likes = likes.Count,
-                Comments = comments
-            };
-
-            return postViewModel;
-        }
-        
         public int Create(string title, string content, string tags, int userId)
         {
             Blog blog = _blogDao.GetByUserId(userId);
@@ -129,6 +122,28 @@ namespace BlogRepository.Domain
             }
 
             _postDao.Delete(postId);
+        }
+
+        private PostViewModel GetPostViewModel(Post post, string username)
+        {
+            List<CommentViewModel> comments = _commentService.GetCommentViewModelsByPostId(post.Id);
+            List<PostLike> likes = _postLikeDao.GetByPostId(post.Id);
+
+            var postViewModel = new PostViewModel
+            {
+                Id = post.Id,
+                BlogId = post.BlogId,
+                Username = username,
+                Title = post.Title,
+                Content = post.Content,
+                Tags = post.Tags,
+                Created = post.Created,
+                Views = post.Views,
+                Likes = likes.Count,
+                Comments = comments
+            };
+
+            return postViewModel;
         }
     }
 }

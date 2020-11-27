@@ -1,6 +1,7 @@
 ﻿using BlogRepository.Models.Comment;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace BlogRepository.Models.Post
 {
@@ -12,6 +13,7 @@ namespace BlogRepository.Models.Post
         public string Title { get; set; }
         public string Content { get; set; }
         public string Tags { get; set; }
+        public List<string> TagList => Tags.Split(new char[] { ',', ';' }).Where(tag => !String.IsNullOrWhiteSpace(tag)).Select(x => x.Trim()).ToList();
         public DateTime Created { get; set; }
         public int Views { get; set; }
         public int Likes { get; set; }

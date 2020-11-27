@@ -18,7 +18,7 @@
 
                 <form action="~/Post/Update" method="post">
                     <h1>Tytuł:</h1>
-                    <input asp-for="Title" name="Title" class="form-control" required/>
+                    <input asp-for="Title" name="Title" class="form-control" required />
 
                     <hr>
 
@@ -39,6 +39,7 @@
                     <input asp-for="Id" hidden />
 
                     <button class="btn btn-success" style="float:right; margin-top:20px" type="submit">Zapisz</button>
+                    <button class="btn btn-primary" style="float:right; margin-top:20px; margin-right: 20px" type="submit" formaction="~/Blog/MyBlog">Anuluj</button>
                 </form>
 
             </div>

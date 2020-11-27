@@ -51,7 +51,7 @@
                     <h2 class="card-title">@post.Title</h2>
                     @{var postPreview = (post.Content.Length >= 50 ? post.Content.Take(50) : post.Content) + "..."; }
                     <p class="card-text">@postPreview</p>
-                    <a href="#" class="btn btn-primary">Czytaj więcej &rarr;</a>
+                    <a href="~/Post/ViewPost?postId=@post.Id" class="btn btn-primary">Czytaj więcej &rarr;</a>
                 </div>
                 <div class="card-footer text-muted">
                     Dodano @post.Created

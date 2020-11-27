@@ -33,6 +33,20 @@ namespace BlogRepository.Controllers
             return View(postViewModel);
         }
 
+        public IActionResult ViewByTag(string tag)
+        {
+            List<Post> posts = _postService.GetByTag(tag);
+            var postTagViewModel = new PostTagViewModel { Tag = tag, Posts = posts };
+            return View(postTagViewModel);
+        }
+
+        public IActionResult Search(string searchString)
+        {
+            List<Post> posts = _postService.GetBySearchString(searchString);
+            var postTagViewModel = new PostSearchViewModel { SearchString = searchString, Posts = posts };
+            return View(postTagViewModel);
+        }
+
         [HttpPost]
         public IActionResult PostComment(int postId, string content)
         {

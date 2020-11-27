@@ -6,6 +6,7 @@ namespace BlogRepository.DataAccess.Dao.Interfaces
 {
     public interface IPostDao
     {
+        List<Post> GetPosts();
         List<Post> GetRecent();
         Post GetById(int id);
         List<Post> GetByBlogId(int blogId);
