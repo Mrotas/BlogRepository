@@ -40,7 +40,7 @@ namespace BlogRepository.Domain
             Post post = _postDao.GetById(postId);
             User user = _userService.GetByPostId(postId);
 
-            PostViewModel postViewModel = GetPostViewModel(post, user.Username);
+            PostViewModel postViewModel = GetPostViewModel(post, user);
             return postViewModel;
         }
 
@@ -52,7 +52,7 @@ namespace BlogRepository.Domain
             var postViewModels = new List<PostViewModel>();
             foreach (Post post in posts)
             {
-                PostViewModel postViewModel = GetPostViewModel(post, user.Username);
+                PostViewModel postViewModel = GetPostViewModel(post, user);
                 postViewModels.Add(postViewModel);
             }
 
@@ -124,7 +124,12 @@ namespace BlogRepository.Domain
             _postDao.Delete(postId);
         }
 
-        private PostViewModel GetPostViewModel(Post post, string username)
+        public void DeleteComment(int commentId)
+        {
+            _commentService.Delete(commentId);
+        }
+
+        private PostViewModel GetPostViewModel(Post post, User user)
         {
             List<CommentViewModel> comments = _commentService.GetCommentViewModelsByPostId(post.Id);
             List<PostLike> likes = _postLikeDao.GetByPostId(post.Id);
@@ -133,7 +138,8 @@ namespace BlogRepository.Domain
             {
                 Id = post.Id,
                 BlogId = post.BlogId,
-                Username = username,
+                UserId = user.Id,
+                Username = user.Username,
                 Title = post.Title,
                 Content = post.Content,
                 Tags = post.Tags,

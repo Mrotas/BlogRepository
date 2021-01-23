@@ -52,7 +52,7 @@
                 </a>
                 <div class="card-body">
                     <h2 class="card-title">@post.Title</h2>
-                    @{var postPreview = (post.Content.Length >= 50 ? post.Content.Take(50) : post.Content) + "..."; }
+                    @{var postPreview = String.Join("", (post.Content.Length >= 100 ? post.Content.Take(100) : post.Content).ToArray()) + "..."; }
                     <p class="card-text">@postPreview</p>
                     <a href="~/Post/ViewPost?postId=@post.Id" class="btn btn-primary">Przejdź &rarr;</a>
                     <a href="~/Post/Edit?postId=@post.Id" class="btn btn-dark">Edytuj &rarr;</a>

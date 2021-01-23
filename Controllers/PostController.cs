@@ -102,10 +102,17 @@ namespace BlogRepository.Controllers
         }
 
         [HttpPost]
-        public IActionResult Delete(PostEditViewModel post)
+        public IActionResult Delete(int postId)
         {
-            _postService.Delete(post.Id);
+            _postService.Delete(postId);
             return RedirectToAction("MyBlog", "Blog");
+        }
+
+        [HttpPost]
+        public IActionResult DeleteComment(int postId, int commentId)
+        {
+            _postService.DeleteComment(commentId);
+            return RedirectToAction("ViewPost", "Post", routeValues: new { postId });
         }
     }
 }

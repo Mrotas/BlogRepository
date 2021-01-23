@@ -17,5 +17,6 @@ namespace BlogRepository.Domain.Interfaces
         int Create(string title, string content, string tags, int userId);
         void Update(PostEditViewModel post);
         void Delete(int postId);
+        void DeleteComment(int commentId);
     }
 }

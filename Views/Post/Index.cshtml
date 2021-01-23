@@ -23,7 +23,8 @@
                     <img class="card-img-top" src="http://placehold.it/750x300" alt="Card image cap">
                     <div class="card-body">
                         <h2 class="card-title">@post.Title</h2>
-                        <p class="card-text">@post.Content</p>
+                        @{var postPreview = String.Join("", (post.Content.Length >= 500 ? post.Content.Take(500) : post.Content).ToArray()) + "..."; }
+                        <p class="card-text">@postPreview</p>
                         <a href="~/Post/ViewPost?postId=@post.Id" class="btn btn-primary">Więcej &rarr;</a>
                     </div>
                     <div class="card-footer text-muted">

@@ -44,6 +44,13 @@ namespace BlogRepository.Controllers
             return View(blogViewModel);
         }
 
+        public IActionResult ViewUserBlog(int userId)
+        {
+            BlogViewModel blogViewModel = _blogService.GetBlogViewModelByUserId(userId);
+            Task.Run(() => _blogService.UpdateViewsCount(blogViewModel.Id));
+            return View("ViewBlog", blogViewModel);
+        }
+
         [HttpPost]
         public IActionResult Create()
         {

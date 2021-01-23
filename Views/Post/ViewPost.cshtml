@@ -1,4 +1,7 @@
-﻿@model BlogRepository.Models.Post.PostViewModel
+﻿@using Microsoft.AspNetCore.Http
+@inject IHttpContextAccessor HttpContextAccessor
+
+@model BlogRepository.Models.Post.PostViewModel
 
 @{
     ViewData["Title"] = "ViewPost";
@@ -76,16 +79,33 @@
             {
                 <div class="media mb-4">
                     <div style="margin-left:auto; margin-right:auto">
-                        <img class="d-flex mr-3 rounded-circle" src="http://placehold.it/50x50" alt="">                    
+                        <img class="d-flex mr-3 rounded-circle" src="http://placehold.it/50x50" alt="">
                         <form asp-action="LikeComment" method="post" name="likeCommentForm">
                             <input type="text" name="postId" value="@Model.Id" hidden />
                             <input type="text" name="commentId" value="@comment.Id" hidden />
                             <button class="btn">@comment.Likes   <i class="fa fa-thumbs-up" style="color: #1b6ec2"></i></button>
                         </form>
                     </div>
-                                        
+
                     <div class="media-body">
-                        <h5 class="mt-0" style="margin-bottom: 0px">@comment.Username</h5>
+                        @{ int? userId = HttpContextAccessor.HttpContext.Session.GetInt32("UserId");}
+                        @if (userId.HasValue && (userId.Value == Model.UserId || userId.Value == comment.UserId))
+                        {
+                            <form action="~/Post/DeleteComment" method="post">
+                                <input type="text" name="commentId" value="@comment.Id" hidden />
+                                <input type="text" name="postId" value="@Model.Id" hidden />
+                                <button class="btn" style="float: right"> <i class="fa fa-trash" style="color: #474a4c"></i></button>
+                            </form>
+                        }
+
+                        @if (comment.UserId.HasValue)
+                        {
+                            <h5 class="mt-0" style="margin-bottom: 0px"><a href="~/Blog/ViewUserBlog?userId=@comment.UserId">@comment.Username</a></h5>
+                        }
+                        else
+                        {
+                            <h5 class="mt-0" style="margin-bottom: 0px">@comment.Username</h5>
+                        }
                         <p style="font-size:small">@comment.Created</p>
                         @comment.Content
                     </div>
