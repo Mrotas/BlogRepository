@@ -39,8 +39,17 @@
                     <input asp-for="Id" hidden />
 
                     <button class="btn btn-success" style="float:right; margin-top:20px" type="submit">Zapisz</button>
-                    <button class="btn btn-primary" style="float:right; margin-top:20px; margin-right: 20px" type="submit" formaction="~/Blog/MyBlog">Anuluj</button>
                 </form>
+
+                <form action="~/Blog/MyBlog" method="post">
+                    <button class="btn btn-primary" style="float:right; margin-top:20px; margin-right: 20px" type="submit">Anuluj</button>
+                </form>
+
+                <form action="~/Post/Delete" method="post">
+                    <input asp-for="Id" hidden />
+                    <button class="btn btn-danger" style="float:right; margin-top:20px; margin-right: 20px" type="submit">Usuń</button>
+                </form>
+
 
             </div>
         </div>

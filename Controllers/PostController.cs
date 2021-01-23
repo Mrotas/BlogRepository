@@ -100,5 +100,12 @@ namespace BlogRepository.Controllers
             _postService.Update(post);
             return RedirectToAction("ViewPost", routeValues: new { postId = post.Id });
         }
+
+        [HttpPost]
+        public IActionResult Delete(PostEditViewModel post)
+        {
+            _postService.Delete(post.Id);
+            return RedirectToAction("MyBlog", "Blog");
+        }
     }
 }
