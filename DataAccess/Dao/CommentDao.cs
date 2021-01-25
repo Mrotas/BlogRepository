@@ -32,7 +32,7 @@ namespace BlogRepository.DataAccess.Dao
         public void Insert(int postId, string content, int? userId)
         {
             List<Comment> comments = GetComments();
-            int lastId = comments.Max(x => x.Id);
+            int lastId = comments.Any() ? comments.Max(x => x.Id) : 0;
 
             var comment = new Comment
             {

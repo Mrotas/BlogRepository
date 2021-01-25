@@ -67,7 +67,7 @@
                     <form asp-action="PostComment" method="post">
                         <input type="text" name="postId" value="@Model.Id" hidden />
                         <div class="form-group">
-                            <textarea name="content" class="form-control" rows="3" placeholder="Podziel się opinią..."></textarea>
+                            <textarea name="content" class="form-control" rows="3" placeholder="Podziel się opinią..." required></textarea>
                         </div>
                         <button type="submit" class="btn btn-primary">Wyślij</button>
                     </form>

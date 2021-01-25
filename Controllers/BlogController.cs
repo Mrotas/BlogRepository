@@ -51,7 +51,6 @@ namespace BlogRepository.Controllers
             return View("ViewBlog", blogViewModel);
         }
 
-        [HttpPost]
         public IActionResult Create()
         {
             int? userId = HttpContext.Session.GetInt32("UserId");

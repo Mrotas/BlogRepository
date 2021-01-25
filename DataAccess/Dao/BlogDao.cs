@@ -46,7 +46,7 @@ namespace BlogRepository.DataAccess.Dao
         public int Insert(int userId)
         {
             List<Blog> blogs = GetBlogs();
-            int lastId = blogs.Max(x => x.Id);
+            int lastId = blogs.Any() ? blogs.Max(x => x.Id) : 0;
 
             var blog = new Blog
             {

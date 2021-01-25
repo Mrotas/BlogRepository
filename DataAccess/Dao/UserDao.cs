@@ -3,6 +3,7 @@ using BlogRepository.DataAccess.Dao.Interfaces;
 using BlogRepository.Models;
 using MongoDB.Bson;
 using MongoDB.Driver;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -36,21 +37,21 @@ namespace BlogRepository.DataAccess.Dao
             return user;
         }
 
-        public bool Create(RegisterModel registerModel)
+        public int Create(RegisterModel registerModel)
         {
             User existingUser = GetByUsername(registerModel.Username);
             if (existingUser != null)
             {
-                return false;
+                throw new Exception($"Login {registerModel.Username} jest już zajęty!");
             }
 
             List<User> users = GetUsers();
-            int lastId = users.Max(x => x.Id);
+            int lastId = users.Any() ? users.Max(x => x.Id) : 0;
 
             var user = new User(++lastId, registerModel);
             _userCollection.InsertOne(user);
 
-            return true;
+            return user.Id;
         }
     }
 }

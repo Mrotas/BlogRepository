@@ -31,7 +31,7 @@ namespace BlogRepository.DataAccess.Dao
         public void Insert(int commentId, int? userId)
         {
             List<CommentLike> commentLikes = GetCommentsLikes();
-            int lastId = commentLikes.Max(x => x.Id);
+            int lastId = commentLikes.Any() ? commentLikes.Max(x => x.Id) : 0;
 
             var commentLike = new CommentLike
             {

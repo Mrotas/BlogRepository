@@ -1,4 +1,7 @@
-﻿@model IEnumerable<BlogRepository.DataAccess.Collection.Blog>
+﻿@using Microsoft.AspNetCore.Http
+@inject IHttpContextAccessor HttpContextAccessor
+
+@model IEnumerable<BlogRepository.DataAccess.Collection.Blog>
 
 @{
     ViewData["Title"] = "Index";
@@ -11,7 +14,8 @@
             Nasze blogi...
         </h1>
 
-        @{
+        @if (Model.Any())
+        {
             var random = new Random().Next(0, Model.Count());
             var randomBlog = Model.ElementAt(random);
             <!-- Heading Row -->
@@ -29,11 +33,19 @@
             </div>
             <!-- /.row -->
             <hr />
-        }
 
-        <h3 class="my-4">
-            Ostatnio dodane...
-        </h3>
+            <h3 class="my-4">
+                Ostatnio dodane...
+            </h3>
+        }
+        else if (HttpContextAccessor.HttpContext.Session.GetInt32("UserId") != null)
+        {
+            <h7>Nikt nie dodał jeszcze bloga, bądź pierwszy i <a href="~/Blog/MyBlog">stwórz swojego bloga</a>!</h7>
+        }
+        else
+        {
+            <h7>Nikt nie dodał jeszcze bloga, <a href="~/User/Login">zaloguj się</a> lub <a href="~/User/Register">zarejestruj</a> i bądź pierwszy!</h7>
+        }
 
         <!-- Content Row -->
         @for (int i = 0; i < 9; i++)

@@ -53,7 +53,7 @@ namespace BlogRepository.DataAccess.Dao
         public int Insert(string title, string content, string tags, int blogId)
         {
             List<Post> posts = GetPosts();
-            int lastId = posts.Max(x => x.Id);
+            int lastId = posts.Any() ? posts.Max(x => x.Id) : 0;
 
             var post = new Post
             {

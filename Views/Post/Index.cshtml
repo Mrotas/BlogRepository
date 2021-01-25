@@ -1,4 +1,7 @@
-﻿@model IEnumerable<BlogRepository.DataAccess.Collection.Post>
+﻿@using Microsoft.AspNetCore.Http
+@inject IHttpContextAccessor HttpContextAccessor
+
+@model IEnumerable<BlogRepository.DataAccess.Collection.Post>
 
 @{
     ViewData["Title"] = "Index";
@@ -15,6 +18,18 @@
             <h1 class="my-4">
                 Ostatnio dodane...
             </h1>
+
+            @if (!Model.Any())
+            {
+                if (HttpContextAccessor.HttpContext.Session.GetInt32("UserId") != null)
+                {
+                    <h7>Nikt nie dodał jeszcze posta, bądź pierwszy i <a href="~/Blog/MyBlog">stwórz swojego posta</a>!</h7>
+                }
+                else
+                {
+                    <h7>Nikt nie dodał jeszcze posta, <a href="~/User/Login">zaloguj się</a> lub <a href="~/User/Register">zarejestruj</a> i bądź pierwszy!</h7>
+                }
+            }
 
             @foreach (var post in Model.Take(10))
             {
@@ -33,15 +48,18 @@
                 </div>
             }
 
-            <!-- Pagination -->
-            <ul class="pagination justify-content-center mb-4">
-                <li class="page-item disabled">
-                    <a class="page-link" href="#">&larr; Starsze</a>
-                </li>
-                <li class="page-item">
-                    <a class="page-link" href="#">Nowsze &rarr;</a>
-                </li>
-            </ul>
+            @if (Model.Any())
+            {
+                <!-- Pagination -->
+                <ul class="pagination justify-content-center mb-4">
+                    <li class="page-item disabled">
+                        <a class="page-link" href="#">&larr; Starsze</a>
+                    </li>
+                    <li class="page-item">
+                        <a class="page-link" href="#">Nowsze &rarr;</a>
+                    </li>
+                </ul>
+            }
 
         </div>
 
@@ -96,7 +114,7 @@
                                         <li>
                                             <a href="~/Post/ViewByTag?tag=@tag">@tag</a>
                                         </li>
-                                    }                                    
+                                    }
                                 }
                             </ul>
                         </div>

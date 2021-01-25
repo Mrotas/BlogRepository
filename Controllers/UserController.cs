@@ -37,7 +37,7 @@ namespace BlogRepository.Controllers
         {
             HttpContext.Session.Remove("UserId");
 
-            return RedirectToAction("Login");
+            return RedirectToAction("Index", "Home");
         }
 
         public IActionResult Register()
@@ -48,10 +48,11 @@ namespace BlogRepository.Controllers
         [HttpPost]
         public IActionResult Register(RegisterModel registerModel)
         {
-            bool success = _userService.Register(registerModel);
-            if (success)
+            RegisterResultModel registerResultModel = _userService.Register(registerModel);
+            if (registerResultModel.RegisterSuccess)
             {
-                return RedirectToAction("LogIn");
+                HttpContext.Session.SetInt32("UserId", registerResultModel.UserId);
+                return RedirectToAction("Index", "Post", registerResultModel.UserId);
             }
 
             ViewBag.ErrorMessage = "Coś poszło nie tak. Proszę spróbować ponownie lub wybrać inną nazwę użytkownika.";

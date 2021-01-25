@@ -25,16 +25,16 @@ namespace BlogRepository.Domain
             return new LoginResultModel(0, false);
         }
 
-        public bool Register(RegisterModel registerModel)
+        public RegisterResultModel Register(RegisterModel registerModel)
         {
             try
             {
-                bool success = _userDao.Create(registerModel);
-                return success;
+                int userId = _userDao.Create(registerModel);
+                return new RegisterResultModel(userId, true);
             }
-            catch(Exception e)
+            catch (Exception)
             {
-                return false;
+                return new RegisterResultModel(0, false);
             }
         }
     }

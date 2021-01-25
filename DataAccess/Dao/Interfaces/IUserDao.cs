@@ -9,6 +9,6 @@ namespace BlogRepository.DataAccess.Dao.Interfaces
         List<User> GetUsers();
         User GetById(int id);
         User GetByUsername(string username);
-        bool Create(RegisterModel registerModel);
+        int Create(RegisterModel registerModel);
     }
 }
